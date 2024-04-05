@@ -17,8 +17,8 @@ Running with OpenSSL 1.1.1w  11 Sep 2023
 
 
 # Locations for Zabbix Agent files
-/etc/systemd/system/zabbix-agent.service
-/usr/local/sbin/check_raspberry.sh
-/usr/local/sbin/zabbix_agentd
-/usr/local/zabbix/zabbix_agentd.conf
-/usr/local/zabbix/zabbix_agentd.conf.d/
+* /etc/systemd/system/zabbix-agent.service
+* /usr/local/sbin/check_raspberry.sh
+* /usr/local/sbin/zabbix_agentd
+* /usr/local/zabbix/zabbix_agentd.conf
+* /usr/local/zabbix/zabbix_agentd.conf.d/

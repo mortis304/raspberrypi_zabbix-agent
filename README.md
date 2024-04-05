@@ -20,5 +20,8 @@ Running with OpenSSL 1.1.1w  11 Sep 2023
 * /etc/systemd/system/zabbix-agent.service
 * /usr/local/sbin/check_raspberry.sh
 * /usr/local/sbin/zabbix_agentd
-* /usr/local/zabbix/zabbix_agentd.conf
-* /usr/local/zabbix/zabbix_agentd.conf.d/
+* /usr/local/zabbix/conf/zabbix_agentd.conf
+* /usr/local/zabbix/conf/zabbix_agentd.conf.d/
+* /usr/local/zabbix/conf/zabbix_agentd.conf.d/userparameter_raspi.conf
+* /usr/local/zabbix/bin/zabbix_get
+* /usr/local/zabbix/bin/zabbix_sender

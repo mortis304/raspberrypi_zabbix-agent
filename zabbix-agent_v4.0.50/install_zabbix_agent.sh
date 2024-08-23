@@ -33,6 +33,11 @@ echo "Creating log folder..."
 mkdir -p /var/log/zabbix
 chown -R zabbix:zabbix /var/log/zabbix/
 
+# Set perms
+chown -R zabbix:zabbix /usr/local/zabbix/
+chown -R zabbix:zabbix /usr/local/sbin
+chmod +x /usr/local/zabbix/sbin/zabbix_agentd
+
 # Add Zabbix Agent to sudoers for specific script execution without a password
 echo "Adding Zabbix Agent to sudoers..."
 {

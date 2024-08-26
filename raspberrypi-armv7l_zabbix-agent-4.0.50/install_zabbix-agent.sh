@@ -26,7 +26,7 @@ set_log_permissions() {
     sudo chmod -R 755 "$ZABBIX_LOG_DIR"
 }
 
-# Function to mirror files to the system
+# Function to mirror files to the /usr directory
 mirror_files() {
     SRC_DIR="./usr"  # Define the source directory relative to the install script
 
@@ -38,12 +38,12 @@ mirror_files() {
         exit 1
     fi
 
-    # Recursively copy all files and directories from $SRC_DIR to the root /
-    echo "Mirroring files from $SRC_DIR to the root directory..."
-    if sudo cp -r "$SRC_DIR"/* /; then
-        echo "Files successfully mirrored from $SRC_DIR to /"
+    # Recursively copy all files and directories from $SRC_DIR to the /usr directory
+    echo "Mirroring files from $SRC_DIR to /usr..."
+    if sudo cp -r "$SRC_DIR"/* /usr/; then
+        echo "Files successfully mirrored from $SRC_DIR to /usr"
     else
-        echo "Error occurred while copying files from $SRC_DIR to /" >&2
+        echo "Error occurred while copying files from $SRC_DIR to /usr" >&2
         exit 1
     fi
 }
@@ -74,9 +74,25 @@ EOL
 
     # Enable the service to start on boot
     sudo systemctl enable zabbix-agent.service
+}
 
-    # Start the service immediately
+# Function to check if Zabbix agent is running
+check_service_status() {
+    echo "Checking if the Zabbix agent service is running..."
+
+    # Start the service
     sudo systemctl start zabbix-agent.service
+
+    # Wait for a few seconds to give the service time to start
+    sleep 5
+
+    # Check the status of the service
+    if sudo systemctl is-active --quiet zabbix-agent.service; then
+        echo "Zabbix agent service is running."
+    else
+        echo "Zabbix agent service failed to start." >&2
+        exit 1
+    fi
 }
 
 # Main script
@@ -86,6 +102,7 @@ create_user_group
 mirror_files
 set_log_permissions
 create_systemd_service
+check_service_status
 
-echo "Installation complete. The Zabbix agent is now running and enabled to start at boot."
+echo "Installation complete. The Zabbix agent is running and enabled to start at boot."
 

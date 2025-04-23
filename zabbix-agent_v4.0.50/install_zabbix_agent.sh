@@ -22,6 +22,10 @@ echo "Copying files..."
 cp -r $SOURCE_DIR/etc/* /etc/
 cp -r $SOURCE_DIR/usr/* /usr/
 
+# Install Libpcre3
+apt update
+apt install libpcre3
+
 # Create Zabbix Agent user
 echo "Creating Zabbix user and group..."
 groupadd -f zabbix
@@ -36,7 +40,10 @@ chown -R zabbix:zabbix /var/log/zabbix/
 # Set perms
 chown -R zabbix:zabbix /usr/local/zabbix/
 chown -R zabbix:zabbix /usr/local/sbin
-chmod +x /usr/local/zabbix/sbin/zabbix_agentd
+chmod +x /usr/local/sbin/check_raspberry.sh
+chmod +x /usr/local/sbin/zabbix_agentd
+chmod +x /usr/local/zabbix/bin/zabbix_get
+chmod +x /usr/local/zabbix/bin/zabbix_sender
 
 # Add Zabbix Agent to sudoers for specific script execution without a password
 echo "Adding Zabbix Agent to sudoers..."
@@ -57,8 +64,10 @@ echo "Reloading systemd daemon..."
 systemctl daemon-reload
 
 # Enable and start Zabbix Agent service
-echo "Enabling and starting Zabbix Agent service..."
+echo "Enabling Zabbix Agent service..."
 systemctl enable zabbix-agent.service
-systemctl start zabbix-agent.service
+#systemctl start zabbix-agent.service
 
 echo "Zabbix Agent installation completed."
+echo ""
+echo "To start Zabbix Agent:  sudo systemctl start zabbix-agent.service"
